@@ -17,7 +17,7 @@ class UpdateDBTest extends CommandUnishTestCase
     public function testUpdateDBStatus()
     {
         $this->setUpDrupal(1, true);
-        $this->drush('pm:enable', ['devel']);
+        $this->drush('pm:enable', ['drush_empty_module']);
         $this->drush('updatedb:status');
         $err = $this->getErrorOutput();
         $this->assertContains('[success] No database updates required.', $err);
@@ -27,8 +27,8 @@ class UpdateDBTest extends CommandUnishTestCase
 
         // Assert that pending hook_update_n appears
         $this->drush('updatedb:status', [], ['format' => 'json']);
-        $out = $this->getOutputFromJSON('devel_update_8002');
-        $this->assertContains('Add enforced dependencies to system.menu.devel', trim($out['description']));
+        $out = $this->getOutputFromJSON('drush_empty_module_8001');
+        $this->assertContains('Fake update hook', trim($out['description']));
 
         // Run hook_update_n
         $this->drush('updatedb', []);
@@ -39,10 +39,10 @@ class UpdateDBTest extends CommandUnishTestCase
         $this->assertContains('[success] No database updates required.', $err);
 
         // Assure that a pending post-update is reported.
-        $this->pathPostUpdate = Path::join($this->webroot(), 'modules/unish/devel/devel.post_update.php');
-        copy(__DIR__ . '/resources/devel.post_update.php', $this->pathPostUpdate);
+        $this->pathPostUpdate = Path::join($this->webroot(), 'modules/unish/drush_empty_module/drush_empty_module.post_update.php');
+        copy(__DIR__ . '/resources/drush_empty_module.post_update.php', $this->pathPostUpdate);
         $this->drush('updatedb:status', [], ['format' => 'json']);
-        $out = $this->getOutputFromJSON('devel-post-null_op');
+        $out = $this->getOutputFromJSON('drush_empty_module-post-null_op');
         $this->assertContains('This is a test of the emergency broadcast system.', trim($out['description']));
     }
 

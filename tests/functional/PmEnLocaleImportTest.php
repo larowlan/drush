@@ -40,7 +40,7 @@ class PmEnLocaleImportCase extends CommandUnishTestCase
 
         $this->drush('language-add', ['nl']);
 
-        $this->drush('pm-enable', ['devel']);
+        $this->drush('pm-enable', ['drush_empty_module']);
         $this->drush('watchdog-show');
         $this->assertContains('Translations imported:', $this->getSimplifiedOutput());
 

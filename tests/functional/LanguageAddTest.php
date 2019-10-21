@@ -54,14 +54,14 @@ class LanguageAddCase extends CommandUnishTestCase
         $this->mkdir($translationDir);
         copy($source, Path::join($translationDir, 'devel.nl.po'));
 
-        $this->drush('pm-enable', ['devel']);
+        $this->drush('pm-enable', ['drush_empty_module']);
         $this->drush('language-add', ['nl']);
 
         $this->drush('watchdog-show', []);
         $this->assertContains('Translations imported:', $this->getSimplifiedOutput());
 
         // Clean up the mess this test creates.
-        unlink(Path::join($translationDir, 'devel.nl.po'));
+        unlink(Path::join($translationDir, 'drush_empty_module.nl.po'));
         rmdir($translationDir);
     }
 }

@@ -23,7 +23,7 @@ function woot_post_update_failing()
  */
 function woot_post_update_install_devel()
 {
-    \Drupal::service('module_installer')->install(['devel']);
+    \Drupal::service('module_installer')->install(['drush_empty_module']);
 }
 
 /**

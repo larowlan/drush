@@ -114,11 +114,11 @@ dependencies:
 YAML_FRAGMENT;
         file_put_contents($filename, $moduleDependency, FILE_APPEND);
 
-        // Add the 'devel' module in core.extension.yml.
+        // Add the 'drush_empty_module' module in core.extension.yml.
         $extensionFile = $this->getConfigSyncDir() . '/core.extension.yml';
         $this->assertFileExists($extensionFile);
         $extension = Yaml::decode(file_get_contents($extensionFile));
-        $extension['module']['devel'] = 0;
+        $extension['module']['drush_empty_module'] = 0;
         require_once $root . "/core/includes/module.inc";
         $extension['module'] = module_config_sort($extension['module']);
         file_put_contents($extensionFile, Yaml::encode($extension));
